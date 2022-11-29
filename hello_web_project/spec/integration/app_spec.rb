@@ -26,10 +26,9 @@ describe Application do
   end
 
   context "GET to /hello" do
-    it "returns 200 OK with the right content" do
+    it "contains a h1 title" do
       response = get("/hello", name: "Steve")
-      expect(response.status).to eq(200)
-      expect(response.body).to eq("Hello Steve")
+      expect(response.body).to include('<h1>Hello Steve!</h1>')
     end
   end
 
