@@ -17,7 +17,25 @@ class Application < Sinatra::Base
 
   get '/albums' do
     repo = AlbumRepository.new
-    repo.all.map {|album| album.title}.join(", ")
+    @albums = repo.all
+    return erb(:albums)
+  end
+
+  get '/albums/:id' do
+
+    id = params[:id]
+    repo_alb = AlbumRepository.new
+    repo_art = ArtistRepository.new
+
+    album = repo_alb.find(id)
+    @title = album.title
+    @release_year = album.release_year
+    artist_id = album.artist_id
+
+    artist = repo_art.find(artist_id)
+    @name = artist.name
+
+    return erb(:albums_id)
   end
 
   post '/albums' do
