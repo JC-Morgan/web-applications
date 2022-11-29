@@ -29,19 +29,13 @@ describe Application do
 
   context "GET/ albums" do
     it "should return the list of albums" do
-      response = get("/albums")
-      expect(response.status).to eq 200
-      expect(response.body).to include '<h1>Albums</h1>'
-      expect(response.body).to include
-      '<p>
-        Title: Surfer Rosa
-        Released: 1988
-      </p>'
-      expect(response.body).to include
-      '<p>
-        Title: Waterloo
-        Released: 1974
-      </p>'
+      response = get('/albums')
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<h1>Albums</h1>')
+      expect(response.body).to include('<a href="/albums/1">Doolittle</a>')
+      expect(response.body).to include('<a href="/albums/2">Surfer Rosa</a>')
+      expect(response.body).to include('<a href="/albums/3">Waterloo</a>')
+      expect(response.body).to include('<a href="/albums/12">Ring Ring</a>')
     end
 
     it "returns the 1st album in the list when /id = /1" do
@@ -87,10 +81,29 @@ describe Application do
   context "GET/ artists" do
     it "should return the list of artists" do
       response = get('/artists')
-
       expect(response.status).to eq(200)
-      expect(response.body).to eq("Pixies, ABBA, Taylor Swift, Nina Simone")
+      expect(response.body).to include('<h1>Artists</h1>')
+      expect(response.body).to include('<a href="/artists/1">Pixies</a>')
+      expect(response.body).to include('<a href="/artists/2">ABBA</a>')
+      expect(response.body).to include('<a href="/artists/3">Taylor Swift</a>')
+    end
 
+    it "returns the 1st artist in the list when /id = /1" do
+      response = get("/artists/1")
+      expect(response.status).to eq 200
+      expect(response.body).to include '<h1>Pixies</h1>'
+      expect(response.body).to include '<p>
+      Genre: Rock
+    </p>'
+    end
+
+    it "returns the 2nd artist in the list when /id = /2" do
+      response = get("/artists/2")
+      expect(response.status).to eq 200
+      expect(response.body).to include '<h1>ABBA</h1>'
+      expect(response.body).to include '<p>
+      Genre: Pop
+    </p>'
     end
   end
 
